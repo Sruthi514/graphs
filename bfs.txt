@@ -1,0 +1,32 @@
+Given a directed graph. The task is to do Breadth First Traversal of this graph starting from 0.
+Note: One can move from node u to node v only if there's an edge from u to v and find the BFS traversal of the graph starting from the 0th vertex, from left to right according to the graph.
+
+
+
+
+class Solution
+{
+    public ArrayList<Integer> bfsOfGraph(int V, ArrayList<ArrayList<Integer>> adj)
+    {
+        boolean visited []=new boolean[V];
+        Queue<Integer> q=new LinkedList<>();
+        ArrayList<Integer> res=new ArrayList<>();
+        visited[0]=true;
+        q.add(0);
+        res.add(0);
+        while(!q.isEmpty()){
+            int s=q.size();
+            for(int i=0;i<s;i++){
+                int curr=q.poll();
+                for(Integer neighbour:adj.get(curr)){
+                    if(!visited[neighbour]){
+                        visited[neighbour]=true;
+                        q.add(neighbour);
+                        res.add(neighbour);
+                    }
+                }
+            }
+        }
+        return res;
+    }
+}
