@@ -1,0 +1,25 @@
+Given a connected undirected graph. Perform a Depth First Traversal of the graph.
+Note: Use recursive approach to find the BFS traversal of the graph starting from the 0th vertex from left to right according to the graph..
+
+
+
+
+class Solution
+{
+    public ArrayList<Integer> result=new ArrayList<Integer>();
+    public boolean visited [];
+    public ArrayList<Integer> dfsOfGraph(int V,ArrayList<ArrayList<Integer>> adj)
+    {
+        visited=new boolean[V];
+        dfs(0,adj);
+        return result;
+    }
+    public void dfs(int source ,ArrayList<ArrayList<Integer>> adj){
+        visited[source]=true;
+        result.add(source);
+        for(Integer neighbour:adj.get(source)){
+            if(!visited[neighbour])
+                dfs(neighbour,adj);
+        }
+    }
+}
