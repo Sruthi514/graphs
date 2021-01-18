@@ -1,0 +1,57 @@
+There are a total of numCourses courses you have to take, labeled from 0 to numCourses-1.
+
+Some courses may have prerequisites, for example to take course 0 you have to first take course 1, which is expressed as a pair: [0,1]
+
+Given the total number of courses and a list of prerequisite pairs, is it possible for you to finish all courses?
+
+
+Example 1:
+
+Input: numCourses = 2, prerequisites = [[1,0]]
+Output: true
+Explanation: There are a total of 2 courses to take. 
+             To take course 1 you should have finished course 0. So it is possible.
+
+
+
+class Solution {
+    ArrayList<ArrayList<Integer>> adj;
+    boolean [] visited;
+    boolean [] ancestors;
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        adj=new ArrayList<ArrayList<Integer>>(numCourses);
+        visited=new boolean[numCourses];
+        ancestors=new boolean[numCourses];
+        for(int i=0;i<numCourses;i++){
+            adj.add(new ArrayList<Integer>());
+        }
+        for(int i=0;i<prerequisites.length;i++){
+            adj.get(prerequisites[i][1]).add(prerequisites[i][0]);
+        }
+        boolean cycle=false;
+        for(int i=0;i<numCourses;i++){
+            if(visited[i])
+                continue;
+            cycle=isCycle(i);
+            if(cycle)
+                return false;
+        }
+        return true;
+            
+    }
+    public boolean isCycle(int source){
+        visited[source]=true;
+        ancestors[source]=true;
+        boolean res=false;
+        for(Integer neighbour:adj.get(source)){
+            if(ancestors[neighbour])
+                return true;
+            if(!visited[neighbour])
+                res=isCycle(neighbour);
+            if(res)
+                return true;
+        }
+        ancestors[source]=false;
+        return false;
+    }
+}
